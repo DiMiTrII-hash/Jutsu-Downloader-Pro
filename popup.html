@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jutsu Downloader Pro</title>
+  <link rel="stylesheet" href="popup.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Главная страница -->
+    <div class="main-page" id="mainPage">
+      <div class="header">
+        <h2>Jutsu Downloader Pro</h2>
+        <div class="subtitle">Скачайте любимое аниме в HD</div>
+      </div>
+      
+      <div class="anime-info" id="animeInfo">
+        <div class="anime-title" id="animeTitle">Загружаем информацию...</div>
+        <div class="anime-icon loading" id="animeIcon"></div>
+        <div class="anime-episode" id="animeEpisode">
+          <div class="episode-info" id="episodeInfo">
+            <span class="season-badge" id="seasonBadge">Загрузка...</span>
+            <span class="episode-badge" id="episodeBadge">...</span>
+          </div>
+          <div class="episode-title" id="episodeTitle">Определяем название серии...</div>
+        </div>
+      </div>
+      
+      <button id="openDownloadMenu" class="download-button main-download-button" disabled>
+        <span class="button-text">
+          <svg class="button-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C13.1 2 14 2.9 14 4V12L16.5 9.5L17.92 10.92L12 16.84L6.08 10.92L7.5 9.5L10 12V4C10 2.9 10.9 2 12 2ZM21 15V18C21 19.1 20.1 20 19 20H5C3.9 20 3 19.1 3 18V15C3 13.9 3.9 13 5 13H8.83L10.83 15H13.17L15.17 13H19C20.1 13 21 13.9 21 15Z"/>
+          </svg>
+          Скачать аниме
+        </span>
+      </button>
+    </div>
+
+    <!-- Страница выбора режима скачивания -->
+    <div class="download-page" id="downloadPage">
+      <div class="page-header">
+        <button class="back-button" id="backButton">
+          <svg class="back-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/>
+          </svg>
+        </button>
+        <h3>Выберите режим скачивания</h3>
+      </div>
+      
+      <div class="anime-info-small" id="animeInfoSmall">
+        <div class="anime-title-small" id="animeTitleSmall">Название аниме</div>
+        <div class="anime-episode-small" id="animeEpisodeSmall">
+          <span class="season-badge-small" id="seasonBadgeSmall">СЕЗОН</span>
+          <span class="episode-badge-small" id="episodeBadgeSmall">СЕРИЯ</span>
+        </div>
+      </div>
+      
+      <div class="download-options">
+        <button class="download-option" id="downloadCurrent">
+          <div class="option-icon">📺</div>
+          <div class="option-content">
+            <div class="option-title">Скачать текущую серию</div>
+            <div class="option-description">Скачать только эту серию</div>
+          </div>
+        </button>
+        
+        <button class="download-option" id="downloadFromStart">
+          <div class="option-icon">🎬</div>
+          <div class="option-content">
+            <div class="option-title">Скачать с 1 серии</div>
+            <div class="option-description">Укажите количество серий</div>
+          </div>
+          <div class="option-input">
+            <input type="number" id="countFromStart" min="1" max="50" value="5" placeholder="5">
+          </div>
+        </button>
+        
+        <button class="download-option" id="downloadRange">
+          <div class="option-icon">📋</div>
+          <div class="option-content">
+            <div class="option-title">Скачать диапазон</div>
+            <div class="option-description">Укажите начальную и конечную серии</div>
+          </div>
+          <div class="option-input range-input">
+            <input type="number" id="rangeStart" min="1" max="999" value="1" placeholder="1">
+            <span>-</span>
+            <input type="number" id="rangeEnd" min="1" max="999" value="10" placeholder="10">
+          </div>
+        </button>
+        
+        <button class="download-option" id="downloadSeason">
+          <div class="option-icon">🎭</div>
+          <div class="option-content">
+            <div class="option-title">Скачать весь сезон</div>
+            <div class="option-description">Все серии текущего сезона</div>
+          </div>
+        </button>
+      </div>
+    </div>
+    
+    <div class="loading-container" id="loadingContainer">
+      <div class="loading-spinner" id="loadingSpinner"></div>
+      <div class="success-animation" id="successIcon">✅</div>
+      <div class="error-animation" id="errorIcon">❌</div>
+      
+      <div class="progress-section">
+        <div class="progress-header">
+          <div class="progress-percentage" id="progressPercentage">0%</div>
+          <div class="progress-remaining" id="progressRemaining">Осталось: --</div>
+        </div>
+        
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <div class="download-stats">
+          <div class="stat-item">
+            <span class="stat-label">Скорость:</span>
+            <span class="stat-value" id="downloadSpeed">-- KB/s</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Размер:</span>
+            <span class="stat-value" id="fileSize">-- MB</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Загружено:</span>
+            <span class="stat-value" id="downloadedSize">-- MB</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="status-text" id="statusText">Подготовка...</div>
+      <div class="status-details" id="statusDetails">Анализируем страницу</div>
+      
+      <button class="cancel-button" id="cancelButton">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+        Отменить
+      </button>
+    </div>
+
+    <div class="footer">
+      <a href="https://github.com/DiMiTrII-hash" target="_blank" class="author-link">
+        <svg class="author-icon" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+        <span>by DiMiTrII</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html> 

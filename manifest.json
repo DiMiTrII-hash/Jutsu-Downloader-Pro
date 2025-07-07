@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "Jutsu Downloader Pro",
+  "version": "1.0",
+  "description": "Скачивайте аниме с jut.su в высоком качестве",
+  
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage",
+    "notifications",
+    "scripting"
+  ],
+  
+  "host_permissions": [
+    "https://jut.su/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["https://jut.su/*"],
+      "js": ["content.js"]
+    }
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Jutsu Downloader Pro",
+    "default_icon": {
+      "16": "media/icon.png",
+      "32": "media/icon.png",
+      "48": "media/icon.png",
+      "128": "media/icon.png"
+    }
+  },
+  
+  "icons": {
+    "16": "media/icon.png",
+    "32": "media/icon.png",
+    "48": "media/icon.png",
+    "128": "media/icon.png"
+  },
+  
+  "author": "DiMiTrII (https://github.com/DiMiTrII-hash)",
+  "homepage_url": "https://github.com/DiMiTrII-hash"
+} 

@@ -1,0 +1,966 @@
+body {
+  width: 420px;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: 
+    linear-gradient(135deg, rgba(13, 13, 21, 0.2) 0%, rgba(26, 26, 46, 0.3) 50%, rgba(22, 33, 62, 0.2) 100%),
+    url('media/2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+/* Фон для страницы выбора скачивания */
+body.download-page-bg {
+  background: 
+    linear-gradient(135deg, rgba(13, 13, 21, 0.2) 0%, rgba(26, 26, 46, 0.3) 50%, rgba(22, 33, 62, 0.2) 100%),
+    url('media/3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Фон для страницы загрузки */
+body.loading-page-bg {
+  background: 
+    linear-gradient(135deg, rgba(13, 13, 21, 0.2) 0%, rgba(26, 26, 46, 0.3) 50%, rgba(22, 33, 62, 0.2) 100%),
+    url('media/1.jpg');
+  background-size: cover;
+  background-position: 75% center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+body.expanded {
+  min-height: fit-content;
+}
+
+/* Убираем скроллбар */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.container {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 6px;
+  transition: background 0.3s ease-in-out;
+}
+
+.container:hover::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.8);
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #a855f7;
+}
+
+.header {
+  display: none;
+}
+
+.subtitle {
+  font-size: 12px;
+  opacity: 0.6;
+  margin-top: 4px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.anime-info {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.anime-info.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: fadeInScale 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.anime-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin: 0 auto 8px auto;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  display: inline-block;
+  width: fit-content;
+  max-width: calc(100% - 16px);
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.8),
+    0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.anime-title::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.anime-title::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.1) 25%,
+    rgba(168, 85, 247, 0.1) 50%,
+    rgba(99, 102, 241, 0.1) 75%,
+    transparent 100%
+  );
+  animation: shimmerEffect 3s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.anime-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0 auto 8px auto;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.anime-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.anime-icon:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.anime-icon:hover::before {
+  opacity: 1;
+}
+
+.anime-icon.loading {
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.3) 0%, rgba(75, 85, 99, 0.3) 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.anime-icon.loading::after {
+  content: '🎬';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  opacity: 0.6;
+}
+
+.anime-episode {
+  margin-top: 4px;
+  text-align: center;
+}
+
+.episode-info {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.season-badge {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.episode-badge {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.episode-title {
+  font-size: 20px;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  margin: 4px auto 0 auto;
+  text-align: center;
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.8),
+    0 0 12px rgba(255, 255, 255, 0.4);
+  padding: 8px 12px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  display: inline-block;
+  width: fit-content;
+  max-width: calc(100% - 16px);
+}
+
+.episode-title::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  z-index: -1;
+}
+
+.episode-title::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.1) 25%,
+    rgba(168, 85, 247, 0.1) 50%,
+    rgba(99, 102, 241, 0.1) 75%,
+    transparent 100%
+  );
+  animation: shimmerEffect 3s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: 12px;
+  z-index: -1;
+}
+
+body.expanded .anime-info {
+  display: block;
+  transform: none;
+  opacity: 1;
+  margin-bottom: 8px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.expanded .anime-title {
+  font-size: 24px;
+  margin: 0 auto 6px auto;
+  padding: 6px 10px;
+  max-width: calc(100% - 12px);
+  text-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+body.expanded .anime-icon {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 7px;
+}
+
+body.expanded .anime-episode {
+  margin-top: 3px;
+  text-align: center;
+}
+
+body.expanded .episode-info {
+  font-size: 15px;
+  margin-bottom: 6px;
+  gap: 8px;
+}
+
+body.expanded .season-badge,
+body.expanded .episode-badge {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+body.expanded .episode-title {
+  font-size: 18px;
+  margin: 3px auto 0 auto;
+  font-weight: 700;
+  padding: 6px 10px;
+  text-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.4);
+  max-width: calc(100% - 12px);
+}
+
+.download-button {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  overflow: hidden;
+}
+
+.download-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.download-button:hover {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.download-button:hover::before {
+  opacity: 1;
+}
+
+.download-button:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.download-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.download-button:disabled::before {
+  display: none;
+}
+
+.download-button .button-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.download-button .button-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.download-button:hover .button-icon {
+  opacity: 1;
+}
+
+body.expanded .download-button {
+  display: none;
+}
+
+.download-button.loading {
+  opacity: 0.6;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.button-hidden {
+  opacity: 0;
+  transform: translateY(-16px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loading-container {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 12px;
+  margin-top: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+body.expanded .loading-container {
+  display: flex;
+}
+
+/* Анимированный эффект для фона загрузки */
+.loading-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 0%,
+    rgba(99, 102, 241, 0.1) 25%,
+    rgba(168, 85, 247, 0.1) 50%,
+    rgba(99, 102, 241, 0.1) 75%,
+    transparent 100%
+  );
+  animation: shimmerEffect 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmerEffect {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  50% { transform: translateX(100%) rotate(45deg); }
+  100% { transform: translateX(-100%) rotate(45deg); }
+}
+
+.loading-container.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Убеждаемся что все элементы поверх фона */
+.loading-container > * {
+  position: relative;
+  z-index: 2;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid #6366f1;
+  border-right: 3px solid #a855f7;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  box-shadow: 
+    0 0 20px rgba(99, 102, 241, 0.3),
+    inset 0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.progress-section {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progress-percentage {
+  font-size: 18px;
+  font-weight: 700;
+  color: #6366f1;
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+.progress-remaining {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 10px rgba(99, 102, 241, 0.2);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  border-radius: 8px;
+  width: 0%;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  animation: progressShine 2s ease-in-out infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.download-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.stat-item {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat-label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.stat-value {
+  display: block;
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.status-text {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  min-height: 20px;
+  color: #ffffff;
+  letter-spacing: -0.1px;
+  animation: fadeIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  text-shadow: 
+    0 0 10px rgba(99, 102, 241, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.status-details {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 1.5;
+  max-height: 40px;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+  animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-animation {
+  display: none;
+  font-size: 48px;
+  color: #10b981;
+  margin-bottom: 8px;
+  animation: scaleIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes scaleIn {
+  0% { 
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.error-animation {
+  display: none;
+  font-size: 48px;
+  color: #ef4444;
+  margin-bottom: 8px;
+  animation: scaleIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Страницы */
+.main-page {
+  display: block;
+}
+
+.download-page {
+  display: none;
+}
+
+.download-page.active {
+  display: block;
+}
+
+.main-page.hidden {
+  display: none;
+}
+
+/* Заголовок страницы выбора */
+.page-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.back-button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.back-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.page-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+/* Компактная информация об аниме */
+.anime-info-small {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.anime-title-small {
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.anime-episode-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.season-badge-small,
+.episode-badge-small {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.episode-badge-small {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+}
+
+/* Опции скачивания */
+.download-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.download-option {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  text-align: left;
+}
+
+.download-option:hover {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.option-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.option-content {
+  flex: 1;
+}
+
+.option-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.option-description {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.option-input {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+}
+
+.option-input input {
+  width: 50px;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  pointer-events: auto;
+}
+
+.option-input input:focus {
+  outline: none;
+  border-color: #6366f1;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.range-input {
+  gap: 4px;
+}
+
+.range-input span {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+.cancel-button {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.cancel-button:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: translateY(-1px);
+}
+
+.cancel-button:active {
+  background-color: #c93d3d;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.4);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.author-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.author-link:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.author-icon {
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+}
+
+ 
