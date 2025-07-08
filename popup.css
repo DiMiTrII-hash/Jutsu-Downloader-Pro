@@ -505,32 +505,6 @@ body.expanded .loading-container {
   display: flex;
 }
 
-/* Анимированный эффект для фона загрузки */
-.loading-container::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    45deg,
-    transparent 0%,
-    rgba(99, 102, 241, 0.1) 25%,
-    rgba(168, 85, 247, 0.1) 50%,
-    rgba(99, 102, 241, 0.1) 75%,
-    transparent 100%
-  );
-  animation: shimmerEffect 3s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes shimmerEffect {
-  0% { transform: translateX(-100%) rotate(45deg); }
-  50% { transform: translateX(100%) rotate(45deg); }
-  100% { transform: translateX(-100%) rotate(45deg); }
-}
-
 .loading-container.active {
   opacity: 1;
   transform: translateY(0) scale(1);
